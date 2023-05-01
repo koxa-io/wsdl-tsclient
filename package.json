@@ -19,9 +19,8 @@
     "prepublishOnly": "npm test && npm run dist",
     "dev": "ts-node -T ./dev.ts",
     "dist": "tsc",
-    "build": "tsc",
-    "lint": "eslint ./src",
-    "lint:fix": "eslint --fix ./src"
+    "build": "rm -rf dist/ && tsc",
+    "lint": "eslint . --ext .ts"
   },
   "repository": {
     "type": "git",
@@ -41,7 +40,8 @@
   },
   "homepage": "https://github.com/dderevjanik/wsdl-tsclient#readme",
   "devDependencies": {
-    "prettier": "^2.6.2",
+    "eslint-config-koxa-io": "https://github.com/koxa-io/eslint.git",
+    "eslint-plugin-import": "^2.27.5",
     "tap-spec": "^5.0.0",
     "tape": "^5.5.3",
     "ts-node": "^10.7.0",
