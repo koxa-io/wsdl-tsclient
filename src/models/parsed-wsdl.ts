@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-plusplus */
 import sanitizeFilename from 'sanitize-filename';
 import { Logger } from '../utils/logger';
 
@@ -5,9 +7,9 @@ export type DefinitionProperty =
     | {
       name: string;
       sourceName: string;
-      description?: string;
+      description?: string | undefined;
       kind: 'PRIMITIVE';
-      isArray?: boolean;
+      isArray?: boolean | undefined;
       type: string;
     }
     | {
@@ -19,7 +21,7 @@ export type DefinitionProperty =
            * @description helps to avoid circular referencies
            */
       kind: 'REFERENCE';
-      isArray?: boolean;
+      isArray?: boolean | undefined;
       ref: Definition;
     };
 
@@ -29,7 +31,7 @@ export interface Definition
   name: string;
   /** Original name of Definition in WSDL */
   sourceName: string;
-  description?: string;
+  description?: string | undefined;
   docs: string[];
   properties: Array<DefinitionProperty>;
 }
@@ -52,7 +54,7 @@ export interface Port
   name: string;
   /** Original name of Port in WSDL */
   sourceName: string;
-  description?: string;
+  description?: string | undefined;
   /** List of callable methods within this Port */
   methods: Array<Method>;
 }
@@ -63,7 +65,7 @@ export interface Service
   name: string;
   /** Original name of Service in WSDL */
   sourceName: string;
-  description?: string;
+  description?: string | undefined;
   /** List of Service's Ports */
   ports: Array<Port>;
 }
