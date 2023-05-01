@@ -80,17 +80,17 @@ function generateDefinitionFile(
   options: GeneratorOptions,
 ): void
 {
-  const defName = definition.name;
+  const defName = definition!.name;
   const defFilePath = path.join(defDir, `${defName}.ts`);
   const defFile = project.createSourceFile(defFilePath, '', {
     overwrite: true,
   });
 
-  generated.push(definition);
+  generated.push(definition!);
 
   const definitionImports: OptionalKind<ImportDeclarationStructure>[] = [];
   const definitionProperties: PropertySignatureStructure[] = [];
-  for (const prop of definition.properties)
+  for (const prop of definition!.properties)
   {
     if (options.modelPropertyNaming)
     {
@@ -107,7 +107,7 @@ function generateDefinitionFile(
     if (prop.kind === 'PRIMITIVE')
     {
       // e.g. string
-      definitionProperties.push(createProperty(prop.name, prop.type, prop.description, prop.isArray));
+      definitionProperties.push(createProperty(prop.name, prop.type, prop.description!, prop.isArray!));
     }
     else if (prop.kind === 'REFERENCE')
     {
@@ -118,11 +118,11 @@ function generateDefinitionFile(
         generateDefinitionFile(project, prop.ref, defDir, [...stack, prop.ref.name], generated, options);
       }
       // If a property is of the same type as its parent type, don't add import
-      if (prop.ref.name !== definition.name)
+      if (prop.ref.name !== definition!.name)
       {
         addSafeImport(definitionImports, `./${prop.ref.name}`, prop.ref.name);
       }
-      definitionProperties.push(createProperty(prop.name, prop.ref.name, prop.sourceName, prop.isArray));
+      definitionProperties.push(createProperty(prop.name, prop.ref.name, prop.sourceName, prop.isArray!));
     }
   }
 
@@ -132,7 +132,7 @@ function generateDefinitionFile(
       leadingTrivia: (writer) => writer.newLine(),
       isExported:    true,
       name:          defName,
-      docs:          [definition.docs.join('\n')],
+      docs:          [definition!.docs.join('\n')],
       kind:          StructureKind.Interface,
       properties:    definitionProperties,
     },
@@ -198,13 +198,13 @@ export async function generate(
             );
             addSafeImport(
               clientImports,
-              `./definitions/${method.paramDefinition.name}`,
+              `./definitions/${method.paramDefinition.name}.js`,
               method.paramDefinition.name,
             );
           }
           addSafeImport(
             portImports,
-            `../definitions/${method.paramDefinition.name}`,
+            `../definitions/${method.paramDefinition.name}.js`,
             method.paramDefinition.name,
           );
         }
@@ -223,13 +223,13 @@ export async function generate(
             );
             addSafeImport(
               clientImports,
-              `./definitions/${method.returnDefinition.name}`,
+              `./definitions/${method.returnDefinition.name}.js`,
               method.returnDefinition.name,
             );
           }
           addSafeImport(
             portImports,
-            `../definitions/${method.returnDefinition.name}`,
+            `../definitions/${method.returnDefinition.name}.js`,
             method.returnDefinition.name,
           );
         }
@@ -254,7 +254,7 @@ export async function generate(
       } // End of PortMethod
       if (!mergedOptions.emitDefinitionsOnly)
       {
-        addSafeImport(serviceImports, `../ports/${port.name}`, port.name);
+        addSafeImport(serviceImports, `../ports/${port.name}.js`, port.name);
         servicePorts.push({
           name:       sanitizePropName(port.name),
           isReadonly: true,
@@ -277,7 +277,7 @@ export async function generate(
 
     if (!mergedOptions.emitDefinitionsOnly)
     {
-      addSafeImport(clientImports, `./services/${service.name}`, service.name);
+      addSafeImport(clientImports, `./services/${service.name}.js`, service.name);
       clientServices.push({ name: sanitizePropName(service.name), type: service.name });
 
       serviceFile.addImportDeclarations(serviceImports);
@@ -375,13 +375,13 @@ export async function generate(
     indexFile.addExportDeclarations(
       parsedWsdl.services.map((service) => ({
         namedExports:    [service.name],
-        moduleSpecifier: `./services/${service.name}`,
+        moduleSpecifier: `./services/${service.name}.js`,
       })),
     );
     indexFile.addExportDeclarations(
       parsedWsdl.ports.map((port) => ({
         namedExports:    [port.name],
-        moduleSpecifier: `./ports/${port.name}`,
+        moduleSpecifier: `./ports/${port.name}.js`,
       })),
     );
   }
