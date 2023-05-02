@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import * as path from 'path';
 import { ComplexTypeElement } from 'soap/lib/wsdl/elements';
 import { open_wsdl } from 'soap/lib/wsdl/index';
@@ -59,10 +61,10 @@ function parseDefinition(
   {
     nonCollisionDefName = parsedWsdl.findNonCollisionDefinitionName(defName);
   }
-  catch (err)
+  catch (err: any)
   {
     const e = new Error(`Error for finding non-collision definition name for ${stack.join('.')}.${name}`);
-    `${e.stack.split('\n').slice(0, 2).join('\n')}\n${err.stack}`;
+    `${e.stack?.split('\n').slice(0, 2).join('\n')}\n${err.stack}`;
     throw e;
   }
   const definition: Definition = {
@@ -166,12 +168,12 @@ function parseDefinition(
                   isArray:    true,
                 });
               }
-              catch (err)
+              catch (err: any)
               {
                 const e = new Error(
                   `Error while parsing Subdefinition for '${stack.join('.')}.${name}'`,
                 );
-                `${e.stack.split('\n').slice(0, 2).join('\n')}\n${err.stack}`;
+                `${e.stack?.split('\n').slice(0, 2).join('\n')}\n${err.stack}`;
                 throw e;
               }
             }
@@ -239,10 +241,10 @@ function parseDefinition(
                 isArray:    false,
               });
             }
-            catch (err)
+            catch (err: any)
             {
               const e = new Error(`Error while parsing Subdefinition for ${stack.join('.')}.${name}`);
-              `${e.stack.split('\n').slice(0, 2).join('\n')}\n${err.stack}`;
+              `${e.stack?.split('\n').slice(0, 2).join('\n')}\n${err.stack}`;
               throw e;
             }
           }
@@ -315,7 +317,7 @@ export async function parseWsdl(wsdlPath: string, options: Partial<ParserOptions
 
               // TODO: Deduplicate code below by refactoring it to external function. Is it even possible ?
               let paramName = 'request';
-              let inputDefinition: Definition = null; // default type
+              let inputDefinition: any = null; // default type
               if (method.input)
               {
                 if (method.input.$name)
@@ -359,7 +361,7 @@ export async function parseWsdl(wsdlPath: string, options: Partial<ParserOptions
                 }
               }
 
-              let outputDefinition: Definition = null; // default type, `{}` or `unknown` ?
+              let outputDefinition: any = null; // default type, `{}` or `unknown` ?
               if (method.output)
               {
                 const outputMessage = wsdl.definitions.messages[method.output.$name];

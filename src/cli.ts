@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable eqeqeq */
 import yargs from 'yargs';
 import path from 'path';
 import { Logger } from './utils/logger';

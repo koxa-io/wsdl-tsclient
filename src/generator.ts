@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable eqeqeq */
 import camelcase from 'camelcase';
 import path from 'path';
 import {
@@ -101,6 +103,8 @@ function generateDefinitionFile(
           break;
         case ModelPropertyNaming.PascalCase:
           prop.name = camelcase(prop.name, { pascalCase: true });
+          break;
+        default:
           break;
       }
     }

@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-plusplus */
+/* eslint-disable eqeqeq */
 import sanitizeFilename from 'sanitize-filename';
 import { Logger } from '../utils/logger';
 
