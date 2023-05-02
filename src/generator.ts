@@ -1,5 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable eqeqeq */
+/* eslint-disable import/no-cycle */
 import camelcase from 'camelcase';
 import path from 'path';
 import {

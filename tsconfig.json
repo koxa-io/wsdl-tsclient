@@ -20,7 +20,6 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
   },
-  "files": ["src/cli.ts"],
   "exclude": [
     "**/__mocks__",
     "./node_modules",

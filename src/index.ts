@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import path from 'path';
 import { parseWsdl } from './parser';
 import { generate } from './generator';
