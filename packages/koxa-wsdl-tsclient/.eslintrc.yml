@@ -4,9 +4,6 @@ env:
   node: true
   jest: true
 extends:
-  - "@koxa-io/eslint-config"
-globals:
-  Atomics: readonly
-  SharedArrayBuffer: readonly
+  - eslint-config-koxa-io
 parserOptions:
   project: ./tsconfig.eslint.json
